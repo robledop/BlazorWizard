@@ -1,0 +1,7 @@
+﻿@if (Parent.ActiveStep == this)
+{
+    <h2>@Name</h2>
+    <div id="step-@(Parent.StepsIndex(this) + 1)">
+        @ChildContent
+    </div>
+}

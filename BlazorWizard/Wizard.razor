@@ -1,20 +1,22 @@
-﻿
-<CascadingValue Value="this">
-    @*<div id=@Id>
-        <div id="container-fluid">
-            <RadzenProgressBar Visible="IsProgressBarVisible" Value="100" ShowValue="false"  Mode="ProgressBarMode.Indeterminate"/>
-            @ChildContent
+﻿<CascadingValue Value="this">
+    @if (IsProgressBarVisible)
+    {
+        <div class="progress-bar">
+            <div class="progress-bar-value"></div>
         </div>
+    }
 
-    </div>*@
+    @ChildContent
 
     <div class="col-12 console-footer" style="display: block;">
         <div class="row">
             <div class="col-6">
-                <button class="btn btn-sm btn-info cancel-btn" 
-                   disabled="@(ActiveStepIndex == Steps.Count - 1)"
-                   @onclick="Cancel">Cancel</button>
-        </div>
+                <button class="btn btn-sm btn-info cancel-btn"
+                        disabled="@(ActiveStepIndex == Steps.Count - 1)"
+                        @onclick="Cancel">
+                    Cancel
+                </button>
+            </div>
             <div class="col-6" style="text-align: right;">
                 <button class="btn btn-sm btn-info"
                         disabled="@(ActiveStepIndex == 0 || ActiveStepIndex == Steps.Count - 1)"
@@ -22,25 +24,24 @@
                         type="button">
                     Previous
                 </button>
-            <button class="btn btn-sm btn-info"
-                    type="@(IsSubmitStep ? "submit" : "button")"
-                    disabled="@IsNextButtonDisabled"
-                    @onclick="GoNext">
-                @if (IsSubmitStep)
-                {
-                    <span>Submit</span>
-                }
-                else if (IsLastStep)
-                {
-                    <span>Close</span>
-                }
-                else
-                {
-                    <span>Next</span>
-                }
-            </button>
+                <button class="btn btn-sm btn-info"
+                        type="@(IsSubmitStep ? "submit" : "button")"
+                        disabled="@IsNextButtonDisabled"
+                        @onclick="GoNext">
+                    @if (IsSubmitStep)
+                    {
+                        <span>Submit</span>
+                    }
+                    else if (IsLastStep)
+                    {
+                        <span>Close</span>
+                    }
+                    else
+                    {
+                        <span>Next</span>
+                    }
+                </button>
             </div>
         </div>
     </div>
-
 </CascadingValue>

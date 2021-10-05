@@ -15,8 +15,7 @@ namespace BlazorWizard
         /// </summary>
         protected internal List<WizardStep> Steps = new();
 
-        [Parameter]
-        public string Id { get; set; }
+        [Parameter] public string Id { get; set; }
 
         /// <summary>
         ///     The ChildContent container for <see cref="WizardStep" />
@@ -44,23 +43,25 @@ namespace BlazorWizard
             {
                 IsNextButtonDisabled = value;
                 _isProgressBarVisible = value;
+                StateHasChanged();
             }
         }
+
 
         /// <summary>
         ///     Determines whether the Wizard is in the last step
         /// </summary>
-        public bool IsLastStep => ActiveStepIndex == Steps.Count - 1;
+        private bool IsLastStep => ActiveStepIndex == Steps.Count - 1;
 
         /// <summary>
         ///     Determines whether the Wizard is in the step where the form needs to be submitted
         /// </summary>
-        public bool IsSubmitStep => ActiveStepIndex == Steps.Count - 2;
+        private bool IsSubmitStep => ActiveStepIndex == Steps.Count - 2;
 
         /// <summary>
         ///     Determines whether the Wizard is in a regular step
         /// </summary>
-        public bool IsRegularStep => ActiveStepIndex < Steps.Count - 2;
+        private bool IsRegularStep => ActiveStepIndex < Steps.Count - 2;
 
         [Parameter] public EventCallback OnSubmit { get; set; }
         [Parameter] public EventCallback OnClose { get; set; }
@@ -112,15 +113,17 @@ namespace BlazorWizard
         }
 
         /// <summary>
-        ///     Populates the <see cref="ActiveStep" /> the Sets the passed in <see cref="WizardStep" /> instance as the
+        ///     Populates the <see cref="ActiveStep" /> then sets the passed in <see cref="WizardStep" /> instance as the active
+        ///     step
         /// </summary>
         /// <param name="step">The WizardStep</param>
-        protected internal void SetActive(WizardStep step)
+        protected void SetActive(WizardStep step)
         {
             ActiveStep = step ?? throw new ArgumentNullException(nameof(step));
 
             ActiveStepIndex = StepsIndex(step);
         }
+
 
         /// <summary>
         ///     Retrieves the index of the current <see cref="WizardStep" /> in the Step List

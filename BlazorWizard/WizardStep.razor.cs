@@ -21,7 +21,7 @@ namespace BlazorWizard
         public RenderFragment ChildContent { get; set; }
 
         /// <summary>
-        ///     The Name of the step
+        ///     The Name of the wizard step
         /// </summary>
         [Parameter]
         public string Name { get; set; }
@@ -37,7 +37,6 @@ namespace BlazorWizard
         /// </summary>
         [Parameter]
         public int Position { get; set; } = 1;
-
 
         protected override void OnParametersSet()
         {

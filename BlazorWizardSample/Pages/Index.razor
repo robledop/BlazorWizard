@@ -1,0 +1,81 @@
+﻿@page "/"
+
+@code {
+    public bool IsProgressBarVisible { get; set; }
+}
+
+
+
+
+<button class="btn btn-primary" @onclick="@ModalShow">Show Dialog!</button>
+@if (showModal)
+{
+    <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <Wizard Id="Wizard"
+                        OnSubmit="Submit"
+                        OnCancel="Cancel"
+                        OnClose="Close"
+                        IsProgressBarVisible="IsProgressBarVisible">
+                    <WizardStep Name="WizardStep 1">
+                        <p>Wizard step 1</p>
+                    </WizardStep>
+                    <WizardStep Name="WizardStep 2" OnNext="Next">
+                        <p>Wizard step 2</p>
+                    </WizardStep>
+                    <WizardStep Name="WizardStep 3">
+                        <p>Wizard step 3</p>
+                    </WizardStep>
+                    <WizardStep Name="WizardStep 4">
+                        <p>Wizard submit step</p>
+                    </WizardStep>
+                    <WizardStep Name="WizardStep 5">
+                        <p>Wizard after submit step</p>
+                    </WizardStep>
+                </Wizard>
+
+            </div>
+        </div>
+    </div>
+}
+<hr />
+@code
+{
+    bool showModal = false;
+
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+    void ModalOk()
+    {
+        showModal = false;
+    }
+
+    protected async Task<bool> Next()
+    {
+        IsProgressBarVisible = true;
+        StateHasChanged();
+
+        await Task.Delay(3000);
+
+        IsProgressBarVisible = false;
+        StateHasChanged();
+        return true;
+    }
+
+    private async Task Submit()
+    {
+        await Next();
+    }
+
+    private void Cancel()
+    {
+        ModalCancel();
+    }
+
+    private void Close()
+    {
+        ModalOk();
+    }
+}
